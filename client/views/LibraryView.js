@@ -5,6 +5,7 @@ var LibraryView = Backbone.View.extend({
 
   initialize: function() {
     this.render();
+    this.collection.on('sync', this.render, this);
 
   },
 
@@ -13,9 +14,17 @@ var LibraryView = Backbone.View.extend({
     // see http://api.jquery.com/detach/
     this.$el.children().detach();
 
-    this.$el.html('<th>Library</th>').append(
+
+
+     this.$el.html('<th>Library</th>').append(
       this.collection.map(function(song) {
+
         return new LibraryEntryView({model: song}).render();
+
+        // this.on('render', this.render(), this)
+       
+        //if this function is executed, then that means the song was clicked 
+        //enque song if clicked 
       })
     );
   }
